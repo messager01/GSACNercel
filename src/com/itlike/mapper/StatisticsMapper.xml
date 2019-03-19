@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itlike.mapper.StatisticsMapper">
+
+    <select id="statisticsNumbers" resultType="java.lang.Integer">
+        SELECT COUNT(*) total_num FROM student
+    </select>
+    <select id="statisticsSex" resultType="java.util.Map">
+        SELECT SUM(IF(sex='男',1,0)) boy_num,SUM(IF(sex='女',1,0)) girl_num FROM student
+    </select>
+    <select id="statisticsIs985_211" resultType="java.util.Map">
+        SELECT SUM(IF(is985_211='是',0,1)) yes_num,SUM(IF(is985_211='否',1,0)) no_num FROM student
+    </select>
+    <select id="statisticsDep"  resultType="java.util.Map">
+        SELECT adjustment_dep ,COUNT(*) student_num FROM student GROUP BY adjustment_dep
+    </select>
+    <select id="statisticsMajor" resultType="java.util.Map">
+SELECT
+m.college,m.major_name,COUNT(s.id) student_num
+FROM
+major m
+LEFT JOIN student s ON s.adjustment_major =m.major_name AND s.`adjustment_dep`=m.`college`
+GROUP BY m.major_name,m.college
+ORDER BY m.college,m.major_name
+    </select>
+    <select id="getAllStudents" resultType="com.itlike.domain.Student">
+        select * from  `student`;
+    </select>
+</mapper>

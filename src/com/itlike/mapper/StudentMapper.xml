@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itlike.mapper.StudentMapper">
+    <insert id="insertStudent">
+      insert into `student`(name,sex,nationality,number,id_card,graduated_college,
+      graduated_major,telnumber,email,first_applicant_name,
+      first_major_code,first_major_name,total_score,political_score,
+      english_score,major_1_name,major_1_score,major_2_name,
+      major_2_score,adjustment_dep,adjustment_major,access_information,
+      is985_211)
+      values (#{name},#{sex},#{nationality},#{number},#{id_card},#{graduated_college},
+      #{graduated_major},#{telnumber},#{email},#{first_applicant_name},
+      #{first_major_code},#{first_major_name},#{total_score},#{political_score},
+      #{english_score},#{major_1_name},#{major_1_score},#{major_2_name},
+      #{major_2_score},#{adjustment_dep},#{adjustment_major},#{access_information},
+      #{is985_211})
+    </insert>
+
+
+
+    <select id="getCollegeis985211" resultType="java.lang.Integer">
+        select count(*) from school where school_name=#{graduatedcollege}
+    </select>
+    <select id="getMajorName" resultType="com.itlike.domain.Major">
+          select * from `major` where college=#{dep}
+    </select>
+
+
+
+    <select id="getTotalStudents" resultType="java.lang.Integer">
+        select count(*) from `student`;
+    </select>
+
+    <select id="getStudentsByM" resultType="java.lang.Integer">
+        select count(*) from `student` where sex='男';
+    </select>
+
+    <select id="getStudentsByW" resultType="java.lang.Integer">
+         select count(*) from `student` where sex='女';
+    </select>
+
+    <select id="getStudentsBy211985" resultType="java.lang.Integer">
+        select count(*) from `student` where is985_211=1;
+    </select>
+
+    <select id="getStudentsByNot211985" resultType="java.lang.Integer">
+        select count(*) from `student` where is985_211=0;
+    </select>
+
+    <select id="getStudentsByGongCheng" resultType="java.lang.Integer">
+        select count(*) from `student` where adjustment_dep='国家数字化学习工程技术研究中心';
+    </select>
+
+    <select id="getStudentsByDaShuJu" resultType="java.lang.Integer">
+          select count(*) from `student` where adjustment_dep='国家数字化学习工程技术研究中心';
+    </select>
+
+    <select id="getStudentsByGCJiaoYuJiShuXue" resultType="java.lang.Integer">
+        SELECT count(*) from `student` where student.adjustment_dep='国家数字化学习工程技术研究中心'
+        and student.adjustment_major='教育技术学'
+    </select>
+
+    <select id="getStudentsByGCJiSuanJiKeXueYuJiShu" resultType="java.lang.Integer">
+        SELECT count(*) from `student` where student.adjustment_dep='国家数字化学习工程技术研究中心'
+        and student.adjustment_major='计算机科学与技术'
+    </select>
+
+    <select id="getStudentsByGCJiaoYuXinXiJiShu" resultType="java.lang.Integer">
+         SELECT count(*) from `student` where student.adjustment_dep='国家数字化学习工程技术研究中心'
+        and student.adjustment_major='教育信息技术'
+    </select>
+
+    <select id="getStudentsByGCRuanJianGongCheng" resultType="java.lang.Integer">
+         SELECT count(*) from `student` where student.adjustment_dep='国家数字化学习工程技术研究中心'
+        and student.adjustment_major='软件工程'
+    </select>
+
+    <select id="getStudentsByDSJJiSuanJiKeXueYuJiShu" resultType="java.lang.Integer">
+        SELECT count(*) from `student` where student.adjustment_dep='教育大数据应用技术国家工程实验室'
+        and student.adjustment_major='计算机科学与技术'
+    </select>
+
+    <select id="getStudentsByDSJRuanJianGongCheng" resultType="java.lang.Integer">
+         SELECT count(*) from `student` where student.adjustment_dep='教育大数据应用技术国家工程实验室'
+        and student.adjustment_major='软件工程'
+    </select>
+
+</mapper>
